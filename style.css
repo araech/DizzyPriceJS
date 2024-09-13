@@ -190,6 +190,12 @@ div#output td.pmatch {
     div input[type=radio][name=typ] + label {
         font-size: 1.6rem;
     }
+    fieldset {
+        padding: 0.5rem;
+    }
+    fieldset legend {
+        padding: 0 0.5rem;
+    }
     fieldset div {
         display: flex;
     }
@@ -209,4 +215,43 @@ div#output td.pmatch {
         padding: 1.2rem 1.8rem;
     }
 
+}
+
+@media screen and (max-width: 430px) {
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+    header div.about {
+        font-size: 1.3rem;
+    }
+    header p {
+        font-size: 0.8rem;
+    }
+    fieldset legend {
+        font-size: 1rem;
+    }
+    div input[type=radio] + label {
+        font-size: 1.1rem;
+        padding: 0.1rem 0.2rem;
+    }
+    div input[type=checkbox] + label {
+        font-size: 1.2rem;
+        padding: 0.2rem 0.4rem;
+    }
+    div input[type=radio][name=typ] + label {
+        font-size: 1.4rem;
+    }
+    input[type=text] {
+        width: 92%;
+    }
+    div#output th, div#output td {
+        font-size: 0.8rem;
+    }
+    input[name=submit] {
+        display: block;
+        margin: 0 auto;
+        font-size: 1.4rem;
+        padding: 0.2rem 0.5rem;
+    }
 }
