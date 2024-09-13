@@ -1,0 +1,200 @@
+<!doctype html>
+<!--
+  This file is part of DizzyPriceJS.
+  Copyright 2024 by Aubrey Raech
+  This program is free software: you can redistribute it and/or modify it under the
+  terms of the GNU General Public License as published by the Free Software Foundation,
+  either version 3 of the License, or (at your option) any later version.
+-->
+<html>
+    <head>
+        <title>DizzyPrice</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script
+			  src="https://code.jquery.com/jquery-3.7.1.min.js"
+			  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+			  crossorigin="anonymous"></script>
+        <script src="objects.js"></script>
+        <script src="dizzyprice.js"></script>
+        <script>
+            const DizzyPrice = new DizzyPrice36();
+
+            $(document).ready(function() {
+                $('input[type=radio][name="typ"]').change(function() {
+                    switch($(this).val()) {
+                        case "(":
+                        case ")":
+                        case "[":
+                            $("input#desc").prop('disabled', false);
+                            break;
+                        default:
+                            $("input#desc").val("");
+                            $("input#desc").prop('disabled', true);
+                            break;
+                    }
+                });
+                $("input#price").on("keydown", event => {
+                    if (event.which == 13) { gatherAndRun() };
+                });
+                $("input#desc").on("keydown", event => {
+                    if (event.which == 13) { gatherAndRun() };
+                });
+                $("div.about").on("click", event => {
+                    $("div.about").toggleClass("opened");
+                    $("article").toggle(300);
+                });
+            });
+
+            function validateInput() {
+                let pricestr = $("input#price").val();
+                if (!(/^[1-9][0-9]*$/.test(pricestr))) {
+                    $("input#price").addClass("invalid");
+                    return false;
+                }
+                $("input#price").removeClass("invalid");
+                return true;
+            }
+
+            function gatherAndRun() {
+                if (validateInput()) {
+                    var opts = new DpOptions(
+                        $("input[type=radio][name=version]:checked").val(),
+                        $("input[type=radio][name=cha]:checked").val(),
+                        $("input[type=radio][name=typ]:checked").val(),
+                        $("input#price").val(),
+                        ($("input[type=radio][name=buysell]:checked").val() == "buying"),
+                        $("input#desc").val(),
+                        ($("input[type=checkbox][name=dunce]:checked").val() == "dunce"),
+                        ($("input[type=checkbox][name=tourist]:checked").val() == "tourist"),
+                        ($("input[type=checkbox][name=credit]:checked").val() == "credit")
+                    );
+
+                    $("div#output").html(DizzyPrice.conductQuery(opts));
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <header>
+            <div class="about">About</div>
+            <h1>DizzyPrice <span class="rd">(beta)</span></h1>
+            <p>The shopkeeper's gaze confuses you!</p>
+        </header>
+        <article>
+            <p>DizzyPrice is a NetHack price identification tool, a rewrite of
+                <a href="https://raech.net/nethack/dizzyprice.php">my original DizzyPrice</a>, which
+                was written in Python with a PHP front-end. This one is written in Javascript, and
+                has a few more features. Now you can set it to do price identification for NetHack
+                versions 3.4.3, 3.6.*, or the upcoming 3.7, which is currently still in development.
+                This tool will remain in beta as long as 3.7 is unreleased, as new features and
+                changes to the object sets or price calculations are still possible. You can also view
+                <a href="https://github.com/araech/DizzyPriceJS">this project on GitHub</a>.</p>
+            <p>Enter your character's charisma, the type of object you are price testing, the price
+                either offered or requested by the shopkeeper, and whether you are buying or selling.
+                If you are wearing a dunce cap, are playing a Tourist level 15 or less (or are wearing
+                a Hawaiian shirt), or you are being offered an amount of store credit by the shopkeeper
+                because he is out of gold, toggle those options.</p>
+            <p>On the results panel, you will notice a "Prob" field in the resulting table. This
+                value is based on the standard probability of a given item being naturally generated
+                in the dungeon of that type, modified by the likelihood of that price being given by
+                the shopkeeper (3/4 chance of Price A, 1/4 chance of Price B), as well as being reduced
+                if the item is a weapon or armor with a naturally ocurring enchantment. This is
+                extremely inaccurate, as some particular items are dropped very frequently by specific
+                monsters (like potions of object detection by nymphs). Take it with a bucket of salt.</p>
+            <p>If you would like to send me feedback, feature requests, or bugs, you can find me
+                with the username <b>Aubses</b> on the Libera IRC #nethack channel, or in the Roguelikes
+                discord server #nethack channel.</p>
+        </article>
+        <main>
+            <form>
+                <fieldset>
+                    <legend>Version</legend>
+                    <div>
+                        <input type="radio" id="v34" name="version" value="v34" />
+                        <label for="v34">3.4.3</label>
+                        <input type="radio" id="v36" name="version" value="v36" checked />
+                        <label for="v36">3.6</label>
+                        <input type="radio" id="v37" name="version" value="v37" />
+                        <label for="v37">3.7</label>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Charisma</legend>
+                    <div>
+                        <input type="radio" id="ch1" name="cha" value="5" />
+                        <label for="ch1">3-5</label>
+                        <input type="radio" id="ch2" name="cha" value="7" />
+                        <label for="ch2">6-7</label>
+                        <input type="radio" id="ch3" name="cha" value="10" checked />
+                        <label for="ch3">8-10</label>
+                        <input type="radio" id="ch4" name="cha" value="15" />
+                        <label for="ch4">11-15</label>
+                        <input type="radio" id="ch5" name="cha" value="17" />
+                        <label for="ch5">16-17</label>
+                        <input type="radio" id="ch6" name="cha" value="18" />
+                        <label for="ch6">18</label>
+                        <input type="radio" id="ch7" name="cha" value="19" />
+                        <label for="ch7">19+</label>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Type</legend>
+                    <div>
+                        <input type="radio" id="typ1" name="typ" value="!" checked />
+                        <label for="typ1">!</label>
+                        <input type="radio" id="typ2" name="typ" value="?" />
+                        <label for="typ2">?</label>
+                        <input type="radio" id="typ3" name="typ" value="/" />
+                        <label for="typ3">/</label>
+                        <input type="radio" id="typ4" name="typ" value="=" />
+                        <label for="typ4">=</label>
+                        <input type="radio" id="typ5" name="typ" value="[" />
+                        <label for="typ5">[</label>
+                        <input type="radio" id="typ6" name="typ" value=")" />
+                        <label for="typ6">)</label>
+                        <input type="radio" id="typ7" name="typ" value="+" />
+                        <label for="typ7">+</label>
+                        <input type="radio" id="typ8" name="typ" value="(" />
+                        <label for="typ8">(</label>
+                        <input type="radio" id="typ9" name="typ" value="*" />
+                        <label for="typ9">*</label>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Description</legend>
+                    <input type="text" id="desc" name="desc" value="" disabled />
+                </fieldset>
+                <fieldset>
+                    <legend>Price</legend>
+                    <input type="text" id="price" name="price" value="0" pattern="[0-9]+"/>
+                </fieldset>
+                <fieldset>
+                    <legend>Buy/Sell</legend>
+                    <div>
+                        <input type="radio" id="buying" name="buysell" value="buying" checked />
+                        <label for="buying">Buying</label>
+                        <input type="radio" id="selling" name="buysell" value="selling" />
+                        <label for="selling">Selling</label>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Options</legend>
+                    <div>
+                        <input type="checkbox" id="dunce" name="dunce" value="dunce" />
+                        <label for="dunce">Dunce</label>
+                        <input type="checkbox" id="tourist" name="tourist" value="tourist" />
+                        <label for="tourist">Tourist</label>
+                        <input type="checkbox" id="credit" name="credit" value="credit" />
+                        <label for="credit">Credit</label>
+                    </div>
+                </fieldset>
+                <input type="button" name="submit" value="Check price" onClick="gatherAndRun()" /> 
+            </form>
+            <div id="output">
+
+            </div>
+        </main>
+    </body>
+</html>

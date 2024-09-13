@@ -1,0 +1,212 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    width: 700px;
+    margin: 0 auto;
+    font-family: serif;
+}
+
+header h1 {
+    font-size: 2rem;
+    text-align: left;
+}
+header h1 .rd {
+    color: #a33;
+    font-style: italic;
+}
+header p {
+    font-size: 1rem;
+    font-style: italic;
+    text-align: left;
+    padding-bottom: 0.2rem;
+}
+
+header div.about {
+    display: block;
+    float: right;
+    font-size: 1.6rem;
+    padding: 1rem;
+}
+header div.about.opened {
+    background-color: #ddf;
+}
+header div.about:hover {
+    cursor: default;
+    background-color: #ddf;
+}
+
+article {
+    display: none;
+    font-size: 1.2rem;
+    padding: 1.5rem 3rem;
+    margin-bottom: 1rem;
+    background-color: #ddf;
+}
+
+article p {
+    padding-bottom: 1rem;
+}
+article p:last-child {
+    padding-bottom: 0;
+}
+
+article a:link, article a:visited, article a:active, article a:hover {
+    font-weight: bold;
+    text-decoration: none;
+    color: rgb(35, 33, 173);
+}
+
+main {
+    padding-top: 1.5rem;
+}
+
+fieldset {
+    padding: 1rem;
+    border: 0;
+    border-top: 1px solid black;
+}
+fieldset legend {
+    padding: 0 1rem;
+    font-size: 1.2rem;
+}
+
+input[type=button] {
+    margin-top: 1rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 1.3rem;
+    font-family: serif;
+}
+
+input[type=text] {
+    padding: 0.2rem 0.5rem;
+    font-size: 1.4rem;
+}
+
+div input[type=radio] {
+    display: none;
+}
+div input[type=radio] + label {
+    padding: .2rem .7rem;
+    font-size: 1.4rem;
+    border: 1px solid black;
+}
+div input[type=radio]:checked + label {
+    background-color: #aaf;
+}
+
+div input[type=checkbox] {
+    display: none;
+}
+div input[type=checkbox] + label {
+    padding: .2rem .6rem;
+    font-size: 1.3rem;
+    border: 1px solid black;
+}
+div input[type=checkbox]:checked + label {
+    background-color: #afa;
+}
+
+.invalid {
+    border: 2px solid red;
+}
+
+div#output {
+    margin-top: 1rem;
+}
+
+div#output p {
+    font-size: 1.4rem;
+    font-style: italic;
+    padding-left: 1rem;
+}
+
+div#output table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: sans-serif;
+}
+div#output td {
+    font-size: 1.2rem;
+    text-align: left;
+    padding: 0.2rem 0.4rem;
+    /* border-bottom: 1px solid #ddd; */
+}
+div#output th {
+    background-color: #222;
+    color: #eee;
+    font-size: 1.2rem;
+    padding: 0.4rem 0.6rem 0.5rem 0.4rem;
+    text-align: left;
+}
+div#output .tprice {
+    font-weight: bold;
+}
+div#output tr:nth-of-type(odd) td {
+    background-color: #ddf;
+}
+
+input[name=submit] {
+    border: 2px solid #cce;
+    border-radius: 0.4rem;
+    font-size: 1.6rem;
+    background-color: #ddf;
+    padding: 0.4rem 0.9rem;
+}
+div#output td.pmatch {
+    color: #228;
+}
+
+@media screen and (max-width: 700px) {
+    body {
+        width: 100%;
+    }
+    header {
+        padding: 0 0 0 0.5rem;
+    }
+    div#output th, div#output td {
+        font-size: 1.1rem;
+    }
+    article {
+        font-size: 1.1rem;
+        padding: 1.3rem 2rem;
+    }
+    input[name=submit] {
+        margin-left: 1rem;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    div input[type=radio] + label {
+        font-size: 1.3rem;
+        padding: 0.2rem 0.4rem;
+    }
+    div input[type=checkbox] + label {
+        font-size: 1.2rem;
+        padding: 0.2rem 0.4rem;
+    }
+    div input[type=radio][name=typ] + label {
+        font-size: 1.6rem;
+    }
+    fieldset div {
+        display: flex;
+    }
+    fieldset div label {
+        flex-grow: 1;
+        margin-right: 2px;
+        text-align: center;
+    }
+    input[name=submit] {
+        display: block;
+        margin: 0 auto;
+        font-size: 1.6rem;
+        padding: 0.3rem 0.7rem;
+    }
+    article {
+        font-size: 1rem;
+        padding: 1.2rem 1.8rem;
+    }
+
+}

@@ -1,0 +1,8 @@
++ Add option to search by base price, to quickly view all X of actual price Y
++ Artifacts (for enchantment price checks?) Verify shopkeeper artifact pricing
++ Keep up with 3.7 git commits to check for item / price calculation changes
+    (paxed ribbed me that he'll change it up just to keep me on my toes)
++ Fix JQuery toggle() to use better JQueryUI easing
++ Calculate probabilities for each version's probabilities
++ Fix enchantment probability calculation
++ Weigh probabilities out of total for current search results
